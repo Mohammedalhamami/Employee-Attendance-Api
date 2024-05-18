@@ -20,6 +20,7 @@ namespace EmployeesLog.API.Controllers
             this.attendanceRepository = attendanceRepository;
         }
 
+
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] AddAttendanceRequestDto addAttendanceRequestDto)
         {
@@ -69,5 +70,22 @@ namespace EmployeesLog.API.Controllers
 
             return Ok(mapper.Map<AttendanceDto>(attendanceDomainModel));
         }
+
+        [HttpDelete]
+        [Route("{id:long}")]
+        public async Task<IActionResult> Delete([FromRoute] long id)
+        {
+            //from db to domain model.
+            var attendanceDomainModel = await attendanceRepository.DeleteAsync(id);
+
+            if( attendanceDomainModel is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(mapper.Map<AttendanceDto>(attendanceDomainModel));
+
+        }
+
     }
 }
