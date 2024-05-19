@@ -26,5 +26,20 @@ namespace EmployeesLog.API.Controllers
             }
             return Ok(employeeWorkHours);
         }
+
+
+        [HttpGet]
+        [Route("absence/{employeeId:int}")]
+        public IActionResult CheckEmployeeAvailablity([FromRoute] int employeeId, [FromRoute]DateOnly checkingDate)
+        {
+            var result = reportRepository.isEmployeeAbsent(employeeId, checkingDate);
+            
+            if(result is null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(result);
+        }
     }
 }
