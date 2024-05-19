@@ -14,8 +14,8 @@ namespace EmployeesLog.API.Models.DTOs
         public string Designation { get; set; } = null!;
 
        
-        [Required(ErrorMessage = "{0} is required")]
-        public string JoinDate { get; set; } = null!;
+        [Required(ErrorMessage = "please enter in this foramt yyyy/mm/dd")]
+        public DateOnly JoinDate { get; set; } 
 
         
         [Required, Range(1, 4, ErrorMessage ="Enter Value from 1 to 4")]

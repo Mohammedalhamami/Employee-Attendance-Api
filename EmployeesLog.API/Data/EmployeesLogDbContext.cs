@@ -28,7 +28,23 @@ namespace EmployeesLog.API.Data
                    .StartsAt(100000)
                    .IncrementsBy(1);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(EmployeeConfiguration).Assembly);
+
+           
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns>workHours int</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        [DbFunction("fn_GetWorkHoursByEmployeeId", Schema ="dbo")]
+        public int GetEmployeeWorkHours(int employeeId, DateOnly startDate, DateOnly endDate)
+        {
+            //implementation does not goes here. it is in attribute. EF core using function mapping.
+            throw new NotImplementedException();
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace EmployeesLog.API.Models.DTOs
         public string Designation { get; set; } = null!;
 
         [Required]
-        public string JoinDate { get; set; }
+        public DateOnly JoinDate { get; set; }
 
         [Required]
         public string Status { get; set; }

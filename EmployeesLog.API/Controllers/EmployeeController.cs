@@ -55,6 +55,7 @@ namespace EmployeesLog.API.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromBody] UpdateEmployeeRequestDto updateEmployeeRequestDto , [FromRoute]int id)
         {
             //dto ==> domain.

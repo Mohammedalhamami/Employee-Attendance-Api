@@ -9,9 +9,9 @@ namespace EmployeesLog.API.Mapping
         public AutoMapperProfiles()
         {
             //Employee Model.
-            CreateMap<CreateRequestEmployeeDto, Employee>().ForMember(dest => dest.JoinDate, opt => opt.MapFrom<CustomResolver>()).ReverseMap();
-            CreateMap<Employee, EmployeeDto>().ForMember(dest => dest.JoinDate, opt => opt.MapFrom<CustomResolver2>()).ReverseMap();
-            CreateMap<UpdateEmployeeRequestDto, Employee>().ForMember(dest => dest.JoinDate, opt => opt.MapFrom<CustomResolver3>()).ReverseMap();
+            CreateMap<CreateRequestEmployeeDto, Employee>().ReverseMap();
+            CreateMap<Employee, EmployeeDto>().ReverseMap();
+            CreateMap<UpdateEmployeeRequestDto, Employee>().ReverseMap();
 
 
             //Attendance Model.

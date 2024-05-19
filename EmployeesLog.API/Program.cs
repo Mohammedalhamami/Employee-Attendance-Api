@@ -1,3 +1,4 @@
+using EmployeesLog.API;
 using EmployeesLog.API.Data;
 using EmployeesLog.API.Mapping;
 using EmployeesLog.API.Repositories;
@@ -11,12 +12,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SchemaFilter<CustomSchemaFilter>();
+});
 
 builder.Services.AddDbContext<EmployeesLogDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeLogConnectionString")));
 
 builder.Services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
 builder.Services.AddScoped<IAttendanceRepository, SQLAttendanceRepository>();
+builder.Services.AddScoped<IReportRepository, SQLReportRepository>();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);

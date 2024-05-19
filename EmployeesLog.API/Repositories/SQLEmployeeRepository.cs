@@ -48,10 +48,7 @@ namespace EmployeesLog.API.Repositories
             
             var existingEmployee =  dbContext.sp_ReadEmployeeById.FromSql($@"exec sp_GetEmployeeById {idParam}").ToList().FirstOrDefault();
 
-            if(existingEmployee is null)
-            {
-                return null;
-            }
+             
            return existingEmployee;
         }
    

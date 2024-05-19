@@ -12,7 +12,7 @@ namespace EmployeesLog.API.Models.DTOs
 
 
         [Required(ErrorMessage = "{0} is required")]
-        public string JoinDate { get; set; } = null!;
+        public DateOnly JoinDate { get; set; }
 
 
         [Required, Range(1, 4, ErrorMessage = "Enter Value from 1 to 4")]

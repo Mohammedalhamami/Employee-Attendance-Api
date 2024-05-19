@@ -8,7 +8,7 @@ namespace EmployeesLog.API.Models.DTOs
         [Required, Range(100000, 999999, ErrorMessage ="Out of range input, please enter between 100000 and 999999")]
         public long EmployeeId { get; set; }
 
-        [Required, DataType(DataType.DateTime)]
+        [Required]
         public DateTime PunchDateTime { get; set; }
 
         [Required, Range(1, 2, ErrorMessage ="Pleaes enter 1 for check in, 2 for check out.")]

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EmployeesLog.API.CustomActionFilters;
 using EmployeesLog.API.Models.Domain;
 using EmployeesLog.API.Models.DTOs;
 using EmployeesLog.API.Repositories;
@@ -22,6 +23,7 @@ namespace EmployeesLog.API.Controllers
 
 
         [HttpPost("Create")]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddAttendanceRequestDto addAttendanceRequestDto)
         {
             //from dto to domain.
@@ -39,7 +41,7 @@ namespace EmployeesLog.API.Controllers
         }
 
         [HttpGet]
-        [Route("{id:long}")]
+        [Route("Read/{id:long}")]
         public async Task<IActionResult> Read([FromRoute] long id)
         {
             //db ==> domain.
@@ -55,7 +57,8 @@ namespace EmployeesLog.API.Controllers
         }
 
         [HttpPut]
-        [Route("{id:long}")]
+        [Route("Update/{id:long}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromBody] AttendanceDto attendanceDto, [FromRoute] long id)
         {
             //dto ==> domain
@@ -72,7 +75,7 @@ namespace EmployeesLog.API.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:long}")]
+        [Route("Delete/{id:long}")]
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
             //from db to domain model.
