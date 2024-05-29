@@ -1,11 +1,11 @@
-﻿namespace EmployeesLog.API.Models.Domain
+﻿namespace Employee_Attendance_Tracker.Models.DTO
 {
-    
-    public class spReadEmployeeById
+    public class EmployeeDto
     {
+        
         public string Name { get; set; } = null!;
         public string Designation { get; set; } = null!;
-        public DateTime JoinDate { get; set; }
+        public DateOnly JoinDate { get; set; }
         public string Status { get; set; } = null!;
         public string Gender { get; set; } = null!;
     }

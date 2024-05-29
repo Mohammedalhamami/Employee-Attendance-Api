@@ -7,7 +7,8 @@ namespace EmployeesLog.API.Repositories
     public interface IEmployeeRepository
     {
        Task<Employee?> CreateAsync(Employee employee);
-       spReadEmployeeById? ReadAsync(int id);
+       Task<List<ReadEmployeeDto>?> ReadAllAsync();
+       Task<ReadEmployeeDto?> ReadByIdAsync(int id);
        Task<Employee?> UpdateByIdAsync(Employee employee, int id);
        Task<Employee?> DeleteByIdAsync(int id);
     }

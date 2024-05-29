@@ -39,14 +39,41 @@ namespace EmployeesLog.API.Repositories
             return existingEmployee;
         }
 
-        public spReadEmployeeById? ReadAsync(int id)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>List<spReadEmployeeById>?</returns>
+        public async Task<List<ReadEmployeeDto>?> ReadAllAsync()
         {
-            var idParam = new SqlParameter("@id", System.Data.SqlDbType.Int)
-            {
-                Value = id
-            };
+          return  await dbContext.Employees.Join(dbContext.EmployeeStatuses,
+                                           employee => employee.StatusId, empStatus => empStatus.Id
+                                           , (employee, empStatus) => new ReadEmployeeDto
+                                           {
+                                               Id = employee.Id,
+                                               Name = employee.Name,
+                                               Designation = employee.Designation,
+                                               JoinDate = employee.JoinDate,
+                                               Gender = employee.Gender,
+                                               Status = empStatus.Name,
+                                               StatusId = empStatus.Id
+                                           }).ToListAsync();
+        }
+
+        public async Task<ReadEmployeeDto?> ReadByIdAsync(int id)
+        {
             
-            var existingEmployee =  dbContext.sp_ReadEmployeeById.FromSql($@"exec sp_GetEmployeeById {idParam}").ToList().FirstOrDefault();
+            var existingEmployee =  await  dbContext.Employees.Where(employee => employee.Id == id).Join(dbContext.EmployeeStatuses,
+										   employee => employee.StatusId, empStatus => empStatus.Id
+										   , (employee, empStatus) => new ReadEmployeeDto
+										   {
+											   Id = employee.Id,
+											   Name = employee.Name,
+											   Designation = employee.Designation,
+											   JoinDate = employee.JoinDate,
+											   Gender = employee.Gender,
+											   Status = empStatus.Name,
+											   StatusId = empStatus.Id
+										   }).FirstOrDefaultAsync();
 
              
            return existingEmployee;

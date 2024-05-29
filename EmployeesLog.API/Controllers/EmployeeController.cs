@@ -3,6 +3,7 @@ using EmployeesLog.API.CustomActionFilters;
 using EmployeesLog.API.Models.Domain;
 using EmployeesLog.API.Models.DTOs;
 using EmployeesLog.API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,8 @@ namespace EmployeesLog.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //blocking controller access from unAuthrized users.
+   // [Authorize]
     public class EmployeeController : ControllerBase
     {
         private readonly IMapper mapper;
@@ -38,11 +41,25 @@ namespace EmployeesLog.API.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllEmployees")]
+        public async Task<IActionResult> ReadAll()
+        {
+          var employees =  await employeeRepository.ReadAllAsync();
+
+            if(employees is null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(employees);
+        }
+
+        [HttpGet]
         [Route("{id:int}")]
-        public IActionResult Read([FromRoute] int id)
+        public async Task<IActionResult> ReadById([FromRoute] int id)
         {
             //from db to domainModle 
-            var employeeDomainModel =  employeeRepository.ReadAsync(id);
+            var employeeDomainModel = await employeeRepository.ReadByIdAsync(id);
             
             if(employeeDomainModel == null)
             {
@@ -55,7 +72,7 @@ namespace EmployeesLog.API.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        [ValidateModel]
+        //[ValidateModel]
         public async Task<IActionResult> Update([FromBody] UpdateEmployeeRequestDto updateEmployeeRequestDto , [FromRoute]int id)
         {
             //dto ==> domain.

@@ -1,6 +1,9 @@
 ﻿using EmployeesLog.API.Data;
 using EmployeesLog.API.Models.Domain;
+using EmployeesLog.API.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using System.Threading.Tasks.Dataflow;
 
 namespace EmployeesLog.API.Repositories
 {
@@ -19,9 +22,18 @@ namespace EmployeesLog.API.Repositories
             await dbContext.SaveChangesAsync();
             return attendance;
         }
-        public async Task<Attendance?> ReadAsync(long id)
+        public async Task<ReadAttendanceDto?> ReadAsync(long id)
         {
-          return await dbContext.Attendances.Include(x => x.Employee).FirstOrDefaultAsync(x => x.Id == id);
+            return await dbContext.Attendances.Include(x => x.Employee).Where(x => x.Id == id).Select(x => new ReadAttendanceDto
+            {
+                employeeName = x.Employee.Name,
+                JoinDate = x.Employee.JoinDate,
+                Gender = x.Employee.Gender == 'M' ? "Male" : "Female",
+                Designation = x.Employee.Designation,
+                PunchDateTime = x.PunchDateTime,
+                PunchStatus = x.PunchStatus == 1 ? "Check In" : "Check Out"
+             
+            }).SingleOrDefaultAsync();
            
         }
         public async Task<Attendance?> UpdateAsync(Attendance attendance, long id)

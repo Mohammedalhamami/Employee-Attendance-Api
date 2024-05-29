@@ -1,0 +1,35 @@
+﻿ 
+@model IEnumerable<Employee_Attendance_Tracker.MVC.Models.AddEmployeeViewModel>
+<h1 class="mt-3">Employee</h1>
+
+<div class="d-flex justify-content-end">
+	<a class="btn btn-secondary" asp-controller="Employee" asp-action="Add">Add Employee</a>
+</div>
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Designation</th>
+			<th>Status</th>
+			<th>JoinDate</th>
+			<th>Gender</th>
+            <th class="blue">Edit</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var employee in Model)
+		{
+		 <tr>
+			<td>@employee.Name</td>
+			<td>@employee.Designation</td>
+			<td>@employee.Status</td>
+			<td>@employee.JoinDate</td>
+		    <td>@(employee.Gender  == 'M' ? "Male" : "Female")</td>
+			<td>
+			  <a asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-light">Edit</a>
+			</td>
+		</tr>	
+		}
+	</tbody>
+</table>

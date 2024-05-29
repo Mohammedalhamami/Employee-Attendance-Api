@@ -1,5 +1,6 @@
 ﻿using EmployeesLog.API.Data.Config;
 using EmployeesLog.API.Models.Domain;
+using EmployeesLog.API.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 using System.Xml;
@@ -16,14 +17,12 @@ namespace EmployeesLog.API.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeStatus> EmployeeStatuses { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
-        public DbSet<spReadEmployeeById> sp_ReadEmployeeById { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<spReadEmployeeById>().HasNoKey();
-            modelBuilder.Entity<spReadEmployeeById>().Metadata.SetIsTableExcludedFromMigrations(true);
             modelBuilder.HasSequence<int>("EmployeeIdSequence")
                    .StartsAt(100000)
                    .IncrementsBy(1);
